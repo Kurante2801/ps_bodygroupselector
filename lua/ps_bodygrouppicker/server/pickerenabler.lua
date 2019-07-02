@@ -1,1 +1,1 @@
-if true then return end
+local CONFIG = include('ps_bodygrouppicker/sh_config.lua')

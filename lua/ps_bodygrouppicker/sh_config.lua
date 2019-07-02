@@ -1,1 +1,4 @@
-if true then return end
+local CONFIG = {}
+
+
+return CONFIG
