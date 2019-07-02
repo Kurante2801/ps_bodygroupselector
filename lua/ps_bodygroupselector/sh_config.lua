@@ -7,7 +7,7 @@ CONFIG.DermaBar = Color(25, 25, 25)
 -- The background of the window
 CONFIG.DermaBackground = Color(50, 50, 50)
 -- The background of the model rectangle
-CONFIG.ModelBackground = Color(0, 0, 255)
+CONFIG.ModelBackground = Color(50, 150, 255)
 
 -- [[ Server ]] --
 
