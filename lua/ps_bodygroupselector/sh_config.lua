@@ -8,6 +8,8 @@ CONFIG.DermaBar = Color(25, 25, 25)
 CONFIG.DermaBackground = Color(50, 50, 50)
 -- The background of the model rectangle
 CONFIG.ModelBackground = Color(50, 150, 255)
+-- Is the background dark?
+CONFIG.SlidersDark = true
 
 -- [[ Server ]] --
 
