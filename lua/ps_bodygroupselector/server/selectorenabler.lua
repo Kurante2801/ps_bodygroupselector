@@ -1,0 +1,1 @@
+local CONFIG = include('ps_bodygroupselector/sh_config.lua')
