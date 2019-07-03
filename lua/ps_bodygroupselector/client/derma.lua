@@ -59,7 +59,7 @@ function PANEL:SetItem(item, mods) -- mods is short for modifications
 	self.ModelStand:SetFOV(45)
 
 	-- Store modifications
-	self.Mods = mods
+	self.Mods = table.Copy(mods)
 
 	local ent = self.ModelStand.Entity
 	-- Make colorable
