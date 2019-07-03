@@ -69,7 +69,7 @@ function PANEL:SetItem(item, mods) -- mods is short for modifications
 	self.ModelStand.Angles = Angle(0, 0, 0)
 	self.ModelStand:SetAnimated(true)
 	-- Allow rotation and player rotation
-	self.ModelStand.DragMousePress = function (this)
+	self.ModelStand.DragMousePress = function(this)
 		this.PressX, this.PressY = gui.MousePos()
 		this.Pressed = true
 		this.Rotating = false
@@ -146,8 +146,7 @@ function PANEL:AddSlider(name, id, mod_id, values, mods)
 			self.ModelStand.Entity:SetSkin(values[value] || 0)
 		end
 
-		mods[mod_id] = values[value] || 1
-		self.Mods = mods
+		self.Mods[mod_id] = value
 
 		this:SetValue(value) -- Makes slider feel snappier
 	end
@@ -159,3 +158,20 @@ function PANEL:AddSlider(name, id, mod_id, values, mods)
 end
 
 vgui.Register('PS_BodygroupSelector.Derma', PANEL, 'DFrame')
+
+-- After game is loaded, create Modify function to show the Modify option
+hook.Add('InitPostEntity', 'PS_ModifyBodygroups.Enable', function()
+	-- For each pointshop item
+	for id, item in pairs(PS.Items) do
+		-- If item doesn't have any bodygroup/skin, stop
+		if !item.Skins && !item.Bodygroups then continue end
+
+		-- Create OnModify function function
+		function item:Modify(mods)
+			vgui.Create('PS_BodygroupSelector.Derma'):SetItem(self, mods)
+		end
+
+		-- Replace pointshop item
+		PS.Items [id] = item
+	end
+end)
