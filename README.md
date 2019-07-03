@@ -24,7 +24,11 @@ ITEM.Bodygroups = {
 
 Remember that not all playermodels have bodygroups and skins, if you see no sliders, it's because there are no bodygroups and there are no skins for that model.
 
+One last step! You need to add `self:SetBodygroups(ply, modifications)` below `ply:SetModel(self.Model)`.
+
 After restarting the map, having the model equipped, click on it again and you'll see a `Modify` button.
 
 ## Settings
-Inside `lua\ps_bodygroupselector\sh_config.lua` there are various settings for customizing, they are also commented so I don't have to explain them here. If you change the config, restart your map for the changes to take effect.
+Inside `lua\ps_bodygroupselector\sh_config.lua` there are various settings for customizing, they are also commented so I don't have to explain them here. If you change the config, restart your map for the changes to take effect.\
+If after using the selector, you go to another model and it looks weird, remember to check its bodygroups/skins and either enable the picker, or force the bodygroups to stay 0 (or another number if you want) adding this below `ply:SetModel(self.Model)` : \
+`ply:SetBodygroup(X, 0)` replacing X with the ID of the bodygroup. You can also do that with skins if that's what wrong: `ply:SetSkin(0)`.
