@@ -49,7 +49,7 @@ end
 
 function PANEL:Paint(w, h)
 	draw.RoundedBox(0, 0, 24, w, h - 24, CONFIG.DermaBackground)
-	draw.RoundedBoxEx(8, 0, 0, w, 24, CONFIG.DermaBar, true, true, false, false)
+	draw.RoundedBoxEx(6, 0, 0, w, 24, CONFIG.DermaBar, true, true, false, false)
 end
 
 function PANEL:SetItem(item, mods) -- mods is short for modifications

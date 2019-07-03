@@ -1,5 +1,7 @@
 local CONFIG = {}
 
+-- Restart map for these to have effect, or reload autorun/ps_bodygroupselector_init.lua
+
 -- [[ Derma ]] --
 
 -- The color of the bar at the top of the window
