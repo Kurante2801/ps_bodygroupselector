@@ -14,7 +14,7 @@ To enable the selector on a model you need to add skins and/or bodygroups to its
 You don't need to add both Skins and Bodygroups.
 
 ```lua
-ITEM.Skins = { 0, 1, 2 }
+ITEM.Skins = { 0, 1, 2 } -- You can skip numbers here, let's say, you don't like skin 1? Just remove it from the table.
 
 ITEM.Bodygroups = {
 	['Name to display'] = { id = 1, values = { 0, 1, 2 } }, -- Remember the number between the [ ] ?
