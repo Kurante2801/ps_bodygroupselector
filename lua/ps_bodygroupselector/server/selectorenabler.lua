@@ -51,3 +51,14 @@ hook.Add('InitPostEntity', 'PS_BodygroupSelector.Enable', function()
 		PS.Items[id] = item
 	end
 end)
+
+-- Receive a request to send a player's model, because getting it on the client would make an invalid path most of the time
+util.AddNetworkString('PS_BodygroupSelector.Preview')
+util.AddNetworkString('PS_BodygroupSelector.ModelPreview')
+net.Receive('PS_BodygroupSelector.Preview', function(_, ply)
+	if !ply:IsSuperAdmin() then return end
+
+	net.Start('PS_BodygroupSelector.ModelPreview')
+		net.WriteString(ply:GetModel())
+	net.Send(ply)
+end)

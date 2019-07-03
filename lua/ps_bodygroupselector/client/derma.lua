@@ -160,7 +160,7 @@ end
 vgui.Register('PS_BodygroupSelector.Derma', PANEL, 'DFrame')
 
 -- After game is loaded, create Modify function to show the Modify option
-hook.Add('InitPostEntity', 'PS_ModifyBodygroups.Enable', function()
+hook.Add('InitPostEntity', 'PS_ModifyBodygroups.Start', function()
 	-- For each pointshop item
 	for id, item in pairs(PS.Items) do
 		-- If item doesn't have any bodygroup/skin, stop
@@ -173,5 +173,80 @@ hook.Add('InitPostEntity', 'PS_ModifyBodygroups.Enable', function()
 
 		-- Replace pointshop item
 		PS.Items [id] = item
+	end
+
+	if !LocalPlayer():IsSuperAdmin() then return end
+	-- Create a command to see current model's properties
+	concommand.Add('ps_bodygroupselector_preview', function()
+		-- Ask the server for our current playermodel (using LocalPlayer():GetModel() will return wrong path most of the time)
+		net.Start('PS_BodygroupSelector.Preview')
+		net.SendToServer()
+	end)
+end)
+
+-- Taken from https://github.com/Facepunch/garrysmod/blob/1a2c317eeeef691e923453018236cf9f66ee74b4/garrysmod/gamemodes/sandbox/gamemode/editor_player.lua
+local function MakeNiceName( str )
+	local newname = {}
+
+	for _, s in pairs( string.Explode( '_', str ) ) do
+		if ( string.len( s ) == 1 ) then table.insert( newname, string.upper( s ) ) continue end
+		table.insert( newname, string.upper( string.Left( s, 1 ) ) .. string.Right( s, string.len( s ) - 1 ) ) -- Ugly way to capitalize first letters.
+	end
+
+	return string.Implode( ' ', newname )
+end
+
+-- Preview a model
+net.Receive('PS_BodygroupSelector.ModelPreview', function()
+	local path = net.ReadString()
+
+	local ITEM = {}
+	ITEM.Name = '' -- To prevent lua errors
+	ITEM.Model = path
+
+	local mainFrame = vgui.Create('PS_BodygroupSelector.Derma')
+	mainFrame:SetItem(ITEM, {})
+	-- Now we change some parameters
+	mainFrame:SetTitle('Previewing current model')
+	mainFrame.Submit:SetText('Close')
+	mainFrame.Submit.DoClick = function() mainFrame:Close() end
+
+	local ent = mainFrame.ModelStand.Entity
+
+	-- We add sliders
+	local skinCount = ent:SkinCount() - 1
+
+	-- Skin
+	if skinCount > 0 then
+		mainFrame:AddSlider('Skin', nil, 'Skin', {}, {})
+		-- Updating values to use skin values instead of a table values
+		mainFrame.SliderPanels.Skin.Slider:SetMinMax(0, skinCount)
+		mainFrame.SliderPanels.Skin.Slider:SetValue(0.1) -- Using 0 doesn't move the slider to the left
+		-- We aren't using a values table, we need to do it raw ( ͡° ͜ʖ ͡°)
+		mainFrame.SliderPanels.Skin.Slider.OnValueChanged = function(this, value)
+			value = math.Round(value)
+			this:SetValue(value)
+
+			ent:SetSkin(value)
+		end
+	end
+
+	-- Bodygroups
+	for i = 0, ent:GetNumBodyGroups() - 1 do
+		-- If there is only one bodygroup, ignore
+		if ent:GetBodygroupCount(i) <= 1 then continue end
+		local name = '[' .. i .. '] ' .. MakeNiceName(ent:GetBodygroupName(i))
+		-- Create slider
+		mainFrame:AddSlider(name, nil, i, {}, {})
+		-- Updating values to use bodygroup values instead of a table values
+		mainFrame.SliderPanels[name].Slider:SetMinMax(0, ent:GetBodygroupCount(i) - 1)
+		mainFrame.SliderPanels[name].Slider:SetValue(0.1) -- Using 0 doesn't move the slider to the left
+		-- We aren't using a values table, we need to do it raw
+		mainFrame.SliderPanels[name].Slider.OnValueChanged = function(this, value)
+			value = math.Round(value)
+			this:SetValue(value)
+
+			ent:SetBodygroup(i, value)
+		end
 	end
 end)
