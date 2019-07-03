@@ -1,6 +1,8 @@
 # PointShop BodyGroup Selector
 This is an addon for the original PointShop that will allow you to customize the playermodels and or skins of the models on the pointshop (provided the models have them).
 
+![Preview](https://i.imgur.com/D86sFDO.png "Preview")
+
 # Installation
 Just put on the addons folder and restart the server/game, you'll need to restart the map for each change you do to an item.
 
