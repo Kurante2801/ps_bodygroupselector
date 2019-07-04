@@ -33,10 +33,7 @@ hook.Add('InitPostEntity', 'PS_BodygroupSelector.Enable', function()
 
 		function item:SetBodygroups(ply, mods)
 			-- Stop if player can't change
-			if !CONFIG.UserGroups[ply:GetUserGroup()] then
-				ply:ChatPrint('You do not have permission to use the bodygroup selector.')
-				return
-			end
+			if !CONFIG.UserGroups[ply:GetUserGroup()] then return end
 			-- If item has a skins table, set skin
 			if self.Skins then
 				ply:SetSkin(self.Skins[mods.Skin || 1] || 0)
