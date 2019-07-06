@@ -22,6 +22,7 @@ CONFIG.UserGroups['user'] = true
 CONFIG.UserGroups['member'] = true
 CONFIG.UserGroups['supporter'] = true
 CONFIG.UserGroups['vip'] = true
+CONFIG.UserGroups['operator'] = true
 CONFIG.UserGroups['trialadmin'] = true
 CONFIG.UserGroups['admin'] = true
 CONFIG.UserGroups['senioradmin'] = true
