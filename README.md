@@ -2,6 +2,7 @@
 This is an addon for the original PointShop that will allow you to customize the playermodels and or skins of the models on the pointshop (provided the models have them).
 
 ![Preview](https://i.imgur.com/D86sFDO.png "Preview")
+
 (I swear I didn't know the one for pointshop 2 also uses this same model to showcase!)
 
 # Installation
